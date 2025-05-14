@@ -1,0 +1,120 @@
+# 应用服务配置
+server:
+  port: 18099
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: logs
+      prefix: access_log
+      suffix: .log
+      pattern: common
+    basedir: ./
+    graceful-shutdown:
+      timeout: 30s   # 设置超时时间，默认为 30s
+  shutdown: graceful
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/plain,text/css,application/javascript
+    min-response-size: 1024
+
+# 应用标识
+app:
+  id: spring-hzx-template
+  name: Spring Boot 3 + JDK 21 Template
+  version: 1.0.0
+
+# Spring配置
+spring:
+  application:
+    name: ${app.name}
+  profiles:
+    active: dev
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+    servlet:
+      multipart:
+        form-data-enabled: true
+        max-file-size: 10MB
+        max-request-size: 10MB
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://1.94.147.176/classroom?createDatabaseIfNotExist=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true
+    username: root
+    password: kjiolluy711
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+  # Redis配置
+  data:
+    redis:
+      database: 0
+      host: 1.94.147.176
+      port: 6379
+      password: kjiolluy711
+      timeout: 5000
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
+
+# MyBatis Plus配置
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.hzx.lesson.*.model
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+# 日志配置
+logging:
+  level:
+    root: error
+    com.hzx.lesson: debug
+  file:
+    name: logs/app.log
+  logback:
+    rolling policy:
+      max-file-size: 10MB
+      max-history: 30
+
+# JWT认证配置
+auth:
+  jwt:
+    header: Authorization
+    expire: 2592000 # 30天，s为单位
+    secret: sunny_data
+
+
+# Swagger配置
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  packages-to-scan: com.hzx.lesson
+  paths-to-match: /**
+
+# 开发调试
+debug: false
+
