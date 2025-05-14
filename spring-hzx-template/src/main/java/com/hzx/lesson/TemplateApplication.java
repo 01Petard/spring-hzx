@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 2025/5/14 12:12
  */
 @SpringBootApplication
+@MapperScan("com.hzx.lesson.mapper")
 public class TemplateApplication {
     public static void main(String[] args) {
         SpringApplication.run(TemplateApplication.class, args);

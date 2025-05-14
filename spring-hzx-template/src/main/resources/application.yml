@@ -17,28 +17,8 @@ server:
     mime-types: application/json,application/xml,text/html,text/plain,text/css,application/javascript
     min-response-size: 1024
 
-# 应用标识
-app:
-  id: spring-hzx-template
-  name: Spring Boot 3 + JDK 21 Template
-  version: 1.0.0
-
 # Spring配置
 spring:
-  application:
-    name: ${app.name}
-  profiles:
-    active: dev
-  mvc:
-    throw-exception-if-no-handler-found: true
-  web:
-    resources:
-      add-mappings: false
-    servlet:
-      multipart:
-        form-data-enabled: true
-        max-file-size: 10MB
-        max-request-size: 10MB
   # 数据源配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -70,7 +50,7 @@ spring:
 # MyBatis Plus配置
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
-  type-aliases-package: com.hzx.lesson.*.model
+  type-aliases-package: com.hzx.lesson.model.entity
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
